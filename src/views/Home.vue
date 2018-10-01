@@ -1,18 +1,29 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>home</h1>
+
+    <router-link to="/details">Details</router-link>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import crumbSetup from '../lib/support/mixin/crumbSetup'
 
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+
+  mixins: [ crumbSetup ],
+
+  breadcrumb: {
+    Detalhes: {
+      untilLast: [
+        {
+          nivel: 2,
+          name: 'Categorias',
+          path: '/category'
+        }
+      ]
+    }
   }
 }
 </script>
