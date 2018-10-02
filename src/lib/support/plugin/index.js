@@ -10,7 +10,7 @@ export default {
 
     registerStore(store)
 
-    Object.defineProperty(Vue.prototype, '$loader', {
+    Object.defineProperty(Vue.prototype, '$breadcrumb', {
       get () {
         return crumbFactory(this)
       }
