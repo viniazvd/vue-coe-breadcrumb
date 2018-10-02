@@ -1,15 +1,7 @@
 <template>
   <div>
-    Detalhes da campanha
+    Details
   </div>
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      crumb: this.$route.params.label
-    }
-  }
-}
-</script>

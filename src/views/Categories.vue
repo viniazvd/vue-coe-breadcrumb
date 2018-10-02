@@ -4,6 +4,8 @@
 
     <hr>
 
+    <h2>Categories</h2>
+
     <div class="category">
       <button @click="to('11111')">Category</button>
       <button @click="to('22222')">Category</button>
@@ -12,7 +14,7 @@
       <button @click="to('55555')">Category</button>
     </div>
 
-    <router-view />
+    <!-- <router-view /> -->
   </div>
 </template>
 
@@ -24,12 +26,6 @@ export default {
 
   components: { CoeBreadcrumb },
 
-  data () {
-    return {
-      crumb: this.$route.params.label
-    }
-  },
-
   methods: {
     to (campaignSlug) {
       const route = {
@@ -38,6 +34,7 @@ export default {
         query: { category: 'lazer' }
       }
 
+      this.$breadcrumb.add(campaignSlug)
       this.$router.push(route)
     }
   }

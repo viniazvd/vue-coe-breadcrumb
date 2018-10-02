@@ -10,7 +10,6 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Início',
       component: () => import('./App.vue'),
       children: [
         {
@@ -46,6 +45,6 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => console.log('1', to) || next())
+// router.beforeEach((to, from, next) => console.log('1', to) || next())
 
 export default router

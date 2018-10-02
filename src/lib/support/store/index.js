@@ -1,19 +1,10 @@
 export default {
   state: {
-    crumbs: [],
-    currentNivel: null
+    crumbs: []
   },
 
   getters: {
-    crumbs: ({ crumbs }) => crumbs,
-
-    lastNivel: ({ crumbs }) => {
-      const length = crumbs.length
-
-      return length && crumbs[length - 1].nivel
-    },
-
-    currentNivel: ({ currentNivel }) => currentNivel
+    crumbs: ({ crumbs }) => crumbs
   },
 
   mutations: {
@@ -25,26 +16,12 @@ export default {
       }
     },
 
-    REMOVE_CRUMB: (state, currentNivel) => {
-      state.crumbs = state.crumbs.filter(crumb => crumb.nivel <= currentNivel)
-    },
-
-    SET_NIVEL: (state, nivel) => {
-      state.currentNivel = nivel
-    }
+    REMOVE_CRUMB: (state, slice) => (state.crumbs = state.crumbs.slice(0, slice))
   },
 
   actions: {
-    BREADCRUMB_ADD: ({ commit }, crumb) => {
-      commit('ADD_CRUMB', crumb)
-    },
+    BREADCRUMB_ADD: ({ commit }, name) => commit('ADD_CRUMB', name),
 
-    BREADCRUMB_REMOVE: ({ commit }, currentNivel) => {
-      commit('REMOVE_CRUMB', currentNivel)
-    },
-
-    BREADCRUMB_SET_NIVEL: ({ commit }, nivel) => {
-      commit('SET_NIVEL', nivel)
-    }
+    BREADCRUMB_REMOVE: ({ commit }, slice) => commit('REMOVE_CRUMB', slice)
   }
 }

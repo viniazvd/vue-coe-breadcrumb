@@ -64,20 +64,22 @@ export default {
     toCategory (category) {
       const route = {
         name: 'Campanhas',
-        params: { category, label: category },
+        params: { category },
         query: { category }
       }
 
+      this.$breadcrumb.add(category)
       this.$router.push(route)
     },
 
     toDetails (category, campaignSlug) {
       const route = {
         name: 'Detalhes da campanha',
-        params: { campaignSlug, label: campaignSlug },
+        params: { campaignSlug },
         query: { category }
       }
 
+      this.$breadcrumb.add([category, campaignSlug])
       this.$router.push(route)
     }
   }

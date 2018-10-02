@@ -4,7 +4,7 @@
       <ul class="breadcrumbs">
         <li v-for="(crumb, index) in breadcrumbs" :key="index" class="crumb">
           <router-link exact :class="['button', { '-active': isActive(crumb) }]" :to="crumb.path">
-            {{ getLabel(crumb) }}
+            {{ getLabel(index) }}
           </router-link>
         </li>
       </ul>
@@ -40,12 +40,20 @@ export default {
       return currentName === crumb.name
     },
 
-    getLabel (crumb) {
-      return (crumb.instances.default && crumb.instances.default._data.crumb) || '-'
+    getLabel (index) {
+      return (this.$breadcrumb.crumbs && this.$breadcrumb.crumbs[index]) || '-'
     },
 
     syncRoutes () {
-      if (this.$route && this.$route.matched) this.breadcrumbs = this.$route.matched
+      if (this.$route && this.$route.matched) {
+        this.breadcrumbs = this.$route.matched.filter(route => route.path)
+      }
+
+      if (this.breadcrumbs.length < this.$breadcrumb.crumbs.length) {
+        const slice = this.breadcrumbs.filter((_, index) => index <= this.breadcrumbs.length).length
+
+        this.$breadcrumb.remove(slice)
+      }
     }
   }
 }
