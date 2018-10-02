@@ -1,11 +1,11 @@
 <template>
   <div class="coe-breadcrumb">
     <h3>vue coe breadcrumb</h3>
-    <ul v-if="breadcrumbs.length">
+    <ul v-if="crumbs.length">
       <li
-        v-for="(crumb, index) in breadcrumbs"
+        v-for="(crumb, index) in crumbs"
         :key="index"
-        :class="['crumb', { '-active': crumb.nivel === currentNivel }]"
+        :class="['crumb', { '-active': isActive(crumb) }]"
         @click="to(index)"
       >
         {{ crumb.nivel }} | {{ crumb.name }} | {{ crumb.path }}
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'coe-breadcrumb',
 
@@ -24,35 +26,38 @@ export default {
     }
   },
 
-  watch: { '$route': 'syncRoutes' },
-
-  mounted () { this.syncRoutes() },
+  watch: {
+    '$route': {
+      handler: 'syncRoutes',
+      immediate: true
+    }
+  },
 
   computed: {
+    ...mapGetters(['crumbs', 'lastNivel']),
+
     currentNivel () {
       return this.$route.meta && this.$route.meta.crumb && this.$route.meta.crumb.nivel
-    },
-
-    lastNivel () {
-      const length = this.breadcrumbs.length
-
-      return length && this.breadcrumbs[length - 1].nivel
     }
   },
 
   methods: {
-    syncRoutes () {
-      const length = this.breadcrumbs.length
+    ...mapActions(['BREADCRUMB_ADD', 'BREADCRUMB_REMOVE']),
 
-      if (!length) {
-        this.breadcrumbs = [ ...this.breadcrumbs, this.$route.meta.crumb ]
+    isActive (crumb) {
+      return crumb['nivel'] === this.lastNivel
+    },
+
+    syncRoutes () {
+      if (!this.crumbs.length) {
+        this.BREADCRUMB_ADD(this.$route.meta.crumb)
         return true
       }
 
       if (this.lastNivel < this.currentNivel) {
-        this.breadcrumbs = [ ...this.breadcrumbs, this.$route.meta.crumb ]
+        this.BREADCRUMB_ADD(this.$route.meta.crumb)
       } else {
-        this.breadcrumbs = this.breadcrumbs.filter(crumb => crumb.nivel <= this.currentNivel)
+        this.BREADCRUMB_REMOVE(this.currentNivel)
       }
     },
 

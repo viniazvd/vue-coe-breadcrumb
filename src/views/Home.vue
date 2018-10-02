@@ -1,28 +1,33 @@
 <template>
   <div>
-    <h1>home</h1>
-
-    <router-link to="/details">Details</router-link>
+    <button @click="gaps">Details</button>
   </div>
 </template>
 
 <script>
-import crumbSetup from '../lib/support/mixin/crumbSetup'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'home',
 
-  mixins: [ crumbSetup ],
+  methods: {
+    ...mapActions(['BREADCRUMB_ADD']),
 
-  breadcrumb: {
-    Detalhes: {
-      untilLast: [
+    gaps () {
+      const crumbs = [
         {
           nivel: 2,
           name: 'Categorias',
           path: '/category'
+        },
+        {
+          nivel: 3,
+          name: 'Detalhes',
+          path: '/details'
         }
       ]
+
+      this.BREADCRUMB_ADD(crumbs)
     }
   }
 }
