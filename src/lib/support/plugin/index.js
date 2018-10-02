@@ -1,18 +1,8 @@
-import crumbFactory from './crumbFactory'
-import registerStore from './registerStore'
-
 export default {
-  install (Vue, store) {
-    if (!store) {
-      console.error('stack need store')
-      return false
-    }
-
-    registerStore(store)
-
+  install (Vue, config) {
     Object.defineProperty(Vue.prototype, '$breadcrumb', {
       get () {
-        return crumbFactory(this)
+        return config
       }
     })
   }

@@ -5,7 +5,13 @@ import store from './store'
 
 import VueCoeBreadcrumb from './lib/support/plugin'
 
-Vue.use(VueCoeBreadcrumb, store)
+const config = {
+  level0: '',
+  level1: 'query',
+  level2: 'params'
+}
+
+Vue.use(VueCoeBreadcrumb, config)
 
 Vue.config.productionTip = false
 

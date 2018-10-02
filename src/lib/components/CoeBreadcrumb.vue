@@ -1,22 +1,18 @@
 <template>
   <div class="coe-breadcrumb">
-    <h3>vue coe breadcrumb</h3>
-    <ul v-if="crumbs.length">
-      <li
-        v-for="(crumb, index) in crumbs"
-        :key="index"
-        :class="['crumb', { '-active': isActive(crumb) }]"
-        @click="to(index)"
-      >
-        {{ crumb.nivel }} | {{ crumb.name }} | {{ crumb.path }}
-      </li>
-    </ul>
+    <slot name="crumbs" :crumbs="breadcrumbs">
+      <ul class="breadcrumbs">
+        <li v-for="(crumb, index) in breadcrumbs" :key="index" class="crumb">
+          <router-link exact :class="['button', { '-active': isActive(crumb) }]" :to="crumb.path">
+            {{ getLabel(crumb) }}
+          </router-link>
+        </li>
+      </ul>
+    </slot>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
 export default {
   name: 'coe-breadcrumb',
 
@@ -28,50 +24,49 @@ export default {
 
   watch: {
     '$route': {
-      handler: 'syncRoutes',
+      handler: function () {
+        this.syncRoutes()
+      },
       immediate: true
     }
   },
 
-  computed: {
-    ...mapGetters(['crumbs', 'lastNivel']),
-
-    currentNivel () {
-      return this.$route.meta && this.$route.meta.crumb && this.$route.meta.crumb.nivel
-    }
-  },
-
   methods: {
-    ...mapActions(['BREADCRUMB_ADD', 'BREADCRUMB_REMOVE']),
-
     isActive (crumb) {
-      return crumb['nivel'] === this.lastNivel
+      if (!crumb) return false
+
+      const currentName = this.breadcrumbs.length && this.breadcrumbs[this.breadcrumbs.length - 1].name
+
+      return currentName === crumb.name
+    },
+
+    getLabel (crumb) {
+      return (crumb.instances.default && crumb.instances.default._data.crumb) || '-'
     },
 
     syncRoutes () {
-      if (!this.crumbs.length) {
-        this.BREADCRUMB_ADD(this.$route.meta.crumb)
-        return true
-      }
-
-      if (this.lastNivel < this.currentNivel) {
-        this.BREADCRUMB_ADD(this.$route.meta.crumb)
-      } else {
-        this.BREADCRUMB_REMOVE(this.currentNivel)
-      }
-    },
-
-    to (index) {
-      if (this.breadcrumbs[index].path) this.$router.push(this.breadcrumbs[index].path)
+      if (this.$route && this.$route.matched) this.breadcrumbs = this.$route.matched
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .coe-breadcrumb {}
 
-.crumb { list-style-type: none; }
+.breadcrumbs { display: flex; }
+
+.crumb {
+  padding-right: 10px;
+  list-style-type: none;
+}
+
+.crumb:not(:last-child):after {
+  content: '|';
+  padding-left: 10px;
+}
+
+.button { text-decoration: none; }
 
 .-active { color: red }
 </style>

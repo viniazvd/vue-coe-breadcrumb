@@ -1,23 +1,24 @@
 <template>
   <div id="app">
-    <coe-breadcrumb />
-
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/categories">Categorias</router-link> |
-      <router-link to="/details">Detalhes</router-link>
+      <router-link to="/">Home</router-link>
     </div>
-    <router-view/>
+
+    <hr>
+
+    <router-view />
   </div>
 </template>
 
 <script>
-import CoeBreadcrumb from './lib/components/CoeBreadcrumb'
-
 export default {
   name: 'root',
 
-  components: { CoeBreadcrumb }
+  data () {
+    return {
+      crumb: 'Início'
+    }
+  }
 }
 </script>
 
