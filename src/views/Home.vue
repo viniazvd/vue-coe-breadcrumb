@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div>
+      <router-link to="/">Home</router-link>
+    </div>
+
     <h2>Categorias</h2>
     <div class="categories">
       <button @click="toCategory('alimentos-e-bebidas')">Alimentos e Bebidas</button>
@@ -12,45 +16,49 @@
     <hr>
 
     <div class="list">
-      <h2>Detalhes</h2>
       <div class="category">
-        <button @click="toDetails('alimentos-e-bebidas', '11111')">Alimentos e Bebidas</button>
-        <button @click="toDetails('alimentos-e-bebidas', '22222')">Alimentos e Bebidas</button>
-        <button @click="toDetails('alimentos-e-bebidas', '33333')">Alimentos e Bebidas</button>
-        <button @click="toDetails('alimentos-e-bebidas', '44444')">Alimentos e Bebidas</button>
-        <button @click="toDetails('alimentos-e-bebidas', '55555')">Alimentos e Bebidas</button>
+        <h4>Alimentos e Bebidas</h4>
+        <button @click="toDetails('alimentos-e-bebidas', '11111')">11111</button>
+        <button @click="toDetails('alimentos-e-bebidas', '22222')">22222</button>
+        <button @click="toDetails('alimentos-e-bebidas', '33333')">33333</button>
+        <button @click="toDetails('alimentos-e-bebidas', '44444')">44444</button>
+        <button @click="toDetails('alimentos-e-bebidas', '55555')">55555</button>
       </div>
 
       <div class="category">
-        <button @click="toDetails('lazer', '11111')">Lazer</button>
-        <button @click="toDetails('lazer', '22222')">Lazer</button>
-        <button @click="toDetails('lazer', '33333')">Lazer</button>
-        <button @click="toDetails('lazer', '44444')">Lazer</button>
-        <button @click="toDetails('lazer', '55555')">Lazer</button>
+        <h4>Lazer</h4>
+        <button @click="toDetails('lazer', '11111')">11111</button>
+        <button @click="toDetails('lazer', '22222')">22222</button>
+        <button @click="toDetails('lazer', '33333')">33333</button>
+        <button @click="toDetails('lazer', '44444')">44444</button>
+        <button @click="toDetails('lazer', '55555')">55555</button>
       </div>
 
       <div class="category">
-        <button @click="toDetails('produtos-e-servicos', '11111')">Produtos e Serviços</button>
-        <button @click="toDetails('produtos-e-servicos', '22222')">Produtos e Serviços</button>
-        <button @click="toDetails('produtos-e-servicos', '33333')">Produtos e Serviços</button>
-        <button @click="toDetails('produtos-e-servicos', '44444')">Produtos e Serviços</button>
-        <button @click="toDetails('produtos-e-servicos', '55555')">Produtos e Serviços</button>
+        <h4>Produtos e Serviços</h4>
+        <button @click="toDetails('produtos-e-servicos', '11111')">11111</button>
+        <button @click="toDetails('produtos-e-servicos', '22222')">22222</button>
+        <button @click="toDetails('produtos-e-servicos', '33333')">33333</button>
+        <button @click="toDetails('produtos-e-servicos', '44444')">44444</button>
+        <button @click="toDetails('produtos-e-servicos', '55555')">55555</button>
       </div>
 
       <div class="category">
-        <button @click="toDetails('bem-estar-e-saude', '11111')">Bem estar e Saúde</button>
-        <button @click="toDetails('bem-estar-e-saude', '22222')">Bem estar e Saúde</button>
-        <button @click="toDetails('bem-estar-e-saude', '33333')">PBem estar e Saúde</button>
-        <button @click="toDetails('bem-estar-e-saude', '44444')">Bem estar e Saúde</button>
-        <button @click="toDetails('bem-estar-e-saude', '55555')">Bem estar e Saúde</button>
+        <h4>Bem estar e Saúde</h4>
+        <button @click="toDetails('bem-estar-e-saude', '11111')">11111</button>
+        <button @click="toDetails('bem-estar-e-saude', '22222')">22222</button>
+        <button @click="toDetails('bem-estar-e-saude', '33333')">33333</button>
+        <button @click="toDetails('bem-estar-e-saude', '44444')">44444</button>
+        <button @click="toDetails('bem-estar-e-saude', '55555')">55555</button>
       </div>
 
       <div class="category">
-        <button @click="toDetails('educacao', '11111')">Educação</button>
-        <button @click="toDetails('educacao', '22222')">Educação</button>
-        <button @click="toDetails('educacao', '33333')">Educação</button>
-        <button @click="toDetails('educacao', '44444')">Educação</button>
-        <button @click="toDetails('educacao', '55555')">Educação</button>
+        <h4>Educação</h4>
+        <button @click="toDetails('educacao', '11111')">11111</button>
+        <button @click="toDetails('educacao', '22222')">22222</button>
+        <button @click="toDetails('educacao', '33333')">33333</button>
+        <button @click="toDetails('educacao', '44444')">44444</button>
+        <button @click="toDetails('educacao', '55555')">55555</button>
       </div>
     </div>
   </div>
@@ -64,11 +72,10 @@ export default {
     toCategory (category) {
       const route = {
         name: 'Campanhas',
-        params: { category },
         query: { category }
       }
 
-      this.$breadcrumb.add(category)
+      // this.$breadcrumb.add(category)
       this.$router.push(route)
     },
 
@@ -79,7 +86,6 @@ export default {
         query: { category }
       }
 
-      this.$breadcrumb.add([category, campaignSlug])
       this.$router.push(route)
     }
   }

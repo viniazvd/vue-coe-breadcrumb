@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 
 Vue.use(Router)
 
@@ -13,17 +14,37 @@ const router = new Router({
       component: () => import('./App.vue'),
       children: [
         {
-          path: '',
+          path: '/',
           name: 'Home',
-          component: () => import('./views/Home.vue')
+          component: () => import('./views/Home.vue'),
+          beforeEnter: async (to, from, next) => {
+            const route = {
+              label: 'Início',
+              name: 'Home',
+              path: '/'
+            }
+
+            store.dispatch('BREADCRUMB_ADD', route)
+
+            next()
+          }
         },
         {
           path: 'campanhas',
           name: 'Campanhas',
           component: () => import('./views/Categories.vue'),
-          // meta: {
-          //   crumb: { label: 'query' }
-          // },
+          beforeEnter: async (to, from, next) => {
+            const { category } = to.query
+            const route = {
+              label: category,
+              name: 'Campanhas',
+              query: { category }
+            }
+
+            store.dispatch('BREADCRUMB_ADD', route)
+
+            next()
+          },
           children: [
             // {
             //   path: '',
@@ -33,10 +54,38 @@ const router = new Router({
             {
               path: ':campaignSlug',
               name: 'Detalhes da campanha',
-              component: () => import('./views/Details.vue')
-              // meta: {
-              //   crumb: { label: 'params', property: 'campaignSlug' }
-              // }
+              component: () => import('./views/Details.vue'),
+              beforeEnter: async (to, from, next) => {
+                const { campaignSlug } = to.params
+                const route = {
+                  label: campaignSlug,
+                  name: 'Detalhes da campanha',
+                  params: { campaignSlug }
+                }
+
+                store.dispatch('BREADCRUMB_ADD', route)
+
+                next()
+              },
+              children: [
+                {
+                  path: ':id',
+                  name: 'Editar campanha',
+                  component: () => import('./views/Edit.vue'),
+                  beforeEnter: async (to, from, next) => {
+                    const { id } = to.params
+                    const route = {
+                      label: id,
+                      name: 'Editar campanha',
+                      params: { id }
+                    }
+
+                    store.dispatch('BREADCRUMB_ADD', route)
+
+                    next()
+                  }
+                }
+              ]
             }
           ]
         }

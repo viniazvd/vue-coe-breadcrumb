@@ -10,6 +10,10 @@ const crumbsFactory = context => {
 
     remove (currentNivel) {
       context.$store.dispatch('BREADCRUMB_REMOVE', currentNivel)
+    },
+
+    replace (crumb) {
+      context.$store.dispatch('BREADCRUMB_REPLACE', crumb)
     }
   }
 }

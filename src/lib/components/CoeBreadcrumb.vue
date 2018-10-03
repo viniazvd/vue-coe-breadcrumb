@@ -1,11 +1,15 @@
 <template>
   <div class="coe-breadcrumb">
-    <slot name="crumbs" :crumbs="breadcrumbs">
+    <slot name="crumbs" :crumbs="$breadcrumb.crumbs">
       <ul class="breadcrumbs">
-        <li v-for="(crumb, index) in breadcrumbs" :key="index" class="crumb">
-          <router-link exact :class="['button', { '-active': isActive(crumb) }]" :to="crumb.path">
+        <li v-for="(crumb, index) in $breadcrumb.crumbs" :key="index" class="crumb">
+          <component
+            :is="(isActive(crumb) && 'div') || 'router-link'"
+            :class="['button', { '-active': isActive(crumb) }]"
+            :to="redirectTo(crumb, index)"
+          >
             {{ getLabel(index) }}
-          </router-link>
+          </component>
         </li>
       </ul>
     </slot>
@@ -16,18 +20,19 @@
 export default {
   name: 'coe-breadcrumb',
 
-  data () {
-    return {
-      breadcrumbs: []
+  watch: {
+    '$route': {
+      handler: 'syncRoutes',
+      deep: true,
+      immediate: true
     }
   },
 
-  watch: {
-    '$route': {
-      handler: function () {
-        this.syncRoutes()
-      },
-      immediate: true
+  computed: {
+    last () {
+      const length = this.$breadcrumb.crumbs.length - 1
+
+      return this.$breadcrumb.crumbs[length]
     }
   },
 
@@ -35,24 +40,35 @@ export default {
     isActive (crumb) {
       if (!crumb) return false
 
-      const currentName = this.breadcrumbs.length && this.breadcrumbs[this.breadcrumbs.length - 1].name
+      const currentName = this.$breadcrumb.crumbs.length && this.$breadcrumb.crumbs[this.$breadcrumb.crumbs.length - 1].name
 
       return currentName === crumb.name
     },
 
     getLabel (index) {
-      return (this.$breadcrumb.crumbs && this.$breadcrumb.crumbs[index]) || '-'
+      return (this.$breadcrumb.crumbs && this.$breadcrumb.crumbs[index] && this.$breadcrumb.crumbs[index].label) || '-'
     },
 
-    syncRoutes () {
-      if (this.$route && this.$route.matched) {
-        this.breadcrumbs = this.$route.matched.filter(route => route.path)
+    syncRoutes (x, y) {
+      if ((x && x.name) === (y && y.name) && (x && x.path) !== (y && y.path)) {
+        const key = Object.keys(this.$route.params)[0]
+        const currentParam = {
+          label: this.$route.params[key],
+          params: { [key]: this.$route.params[key] }
+        }
+
+        this.$breadcrumb.replace(currentParam)
       }
 
-      if (this.breadcrumbs.length < this.$breadcrumb.crumbs.length) {
-        const slice = this.breadcrumbs.filter((_, index) => index <= this.breadcrumbs.length).length
+      if (this.$breadcrumb.crumbs.length > this.$route.matched.length) {
+        this.$breadcrumb.remove(this.$breadcrumb.crumbs.length - this.$route.matched.length)
+      }
+    },
 
-        this.$breadcrumb.remove(slice)
+    redirectTo (crumb, index) {
+      return {
+        path: crumb.path || '/',
+        params: { campaignSlug: '11111' }
       }
     }
   }
@@ -62,7 +78,11 @@ export default {
 <style scoped>
 .coe-breadcrumb {}
 
-.breadcrumbs { display: flex; }
+.breadcrumbs {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
 
 .crumb {
   padding-right: 10px;
