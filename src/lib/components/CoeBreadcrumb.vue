@@ -5,10 +5,12 @@
         <li v-for="(crumb, index) in $breadcrumb.crumbs" :key="index" class="crumb">
           <component
             :is="(isActive(crumb) && 'div') || 'router-link'"
-            :class="['button', { '-active': isActive(crumb) }]"
-            :to="redirectTo(crumb, index)"
+            :class="['link', { '-active': isActive(crumb) }]"
+            :to="crumb"
           >
-            {{ getLabel(index) }}
+            <slot name="crumbs" :label="getLabel(index)">
+              {{ getLabel(index) }}
+            </slot>
           </component>
         </li>
       </ul>
@@ -22,7 +24,7 @@ export default {
 
   watch: {
     '$route': {
-      handler: 'syncRoutes',
+      handler: 'syncCrumbs',
       deep: true,
       immediate: true
     }
@@ -49,27 +51,45 @@ export default {
       return (this.$breadcrumb.crumbs && this.$breadcrumb.crumbs[index] && this.$breadcrumb.crumbs[index].label) || '-'
     },
 
-    syncRoutes (x, y) {
-      if ((x && x.name) === (y && y.name) && (x && x.path) !== (y && y.path)) {
-        const key = Object.keys(this.$route.params)[0]
-        const currentParam = {
-          label: this.$route.params[key],
-          params: { [key]: this.$route.params[key] }
-        }
-
-        this.$breadcrumb.replace(currentParam)
-      }
-
-      if (this.$breadcrumb.crumbs.length > this.$route.matched.length) {
-        this.$breadcrumb.remove(this.$breadcrumb.crumbs.length - this.$route.matched.length)
-      }
+    getValue (obj) {
+      return Object.values(obj)[0]
     },
 
-    redirectTo (crumb, index) {
-      return {
-        path: crumb.path || '/',
-        params: { campaignSlug: '11111' }
+    replace () {
+      const key = Object.keys(this.$route.params)[0]
+
+      const currentParam = {
+        label: this.$route.params[key],
+        params: { [key]: this.$route.params[key] }
       }
+
+      this.$breadcrumb.replace(currentParam)
+    },
+
+    syncCrumbs (x, y) {
+      // sync
+      // .. to-do (remover lógica dos guards das rotas)
+
+      // if page reload, remap the labels of store
+      // if (this.$breadcrumb.crumbs.some(({ label }) => !label)) this.$breadcrumb.remap()
+
+      // replace
+      // if ((x && x.name) === (y && y.name) && (x && x.path) !== (y && y.path)) this.replace()
+
+      // remove
+      // if (this.$breadcrumb.crumbs.length > this.$route.matched.length) {
+      //   this.$breadcrumb.remove(this.$breadcrumb.crumbs.length - this.$route.matched.length)
+      // }
+
+      // takes the value of the last parameter of the store
+      // const lastCrumb = this.$breadcrumb.crumbs[this.$breadcrumb.crumbs.length - 1]
+      // let property = 'query'
+      // if (!lastCrumb[property]) property = 'params'
+
+      // const { [property]: paramRoute } = x
+
+      // replace after remove
+      // if (this.getValue(lastCrumb[property]) !== this.getValue(paramRoute)) this.replace()
     }
   }
 }
@@ -94,7 +114,7 @@ export default {
   padding-left: 10px;
 }
 
-.button { text-decoration: none; }
+.link { text-decoration: none; }
 
 .-active { color: red }
 </style>

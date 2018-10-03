@@ -68,6 +68,8 @@
 export default {
   name: 'home',
 
+  hasCrumb: true,
+
   methods: {
     toCategory (category) {
       const route = {
@@ -75,7 +77,6 @@ export default {
         query: { category }
       }
 
-      // this.$breadcrumb.add(category)
       this.$router.push(route)
     },
 

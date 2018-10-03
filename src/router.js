@@ -19,12 +19,13 @@ const router = new Router({
           component: () => import('./views/Home.vue'),
           beforeEnter: async (to, from, next) => {
             const route = {
+              path: '/',
               label: 'Início',
-              name: 'Home',
-              path: '/'
+              name: 'Home'
             }
 
             store.dispatch('BREADCRUMB_ADD', route)
+            store.dispatch('BREADCRUMB_STATUS', true)
 
             next()
           }
@@ -36,33 +37,33 @@ const router = new Router({
           beforeEnter: async (to, from, next) => {
             const { category } = to.query
             const route = {
+              path: 'campanhas',
               label: category,
               name: 'Campanhas',
               query: { category }
             }
 
+            console.log('categorias')
             store.dispatch('BREADCRUMB_ADD', route)
 
             next()
           },
           children: [
-            // {
-            //   path: '',
-            //   name: 'Campanhas',
-            //   component: () => import('./views/Search.vue')
-            // },
             {
               path: ':campaignSlug',
               name: 'Detalhes da campanha',
               component: () => import('./views/Details.vue'),
               beforeEnter: async (to, from, next) => {
+                // console.log(to, 'details')
                 const { campaignSlug } = to.params
                 const route = {
+                  path: ':campaignSlug',
                   label: campaignSlug,
                   name: 'Detalhes da campanha',
                   params: { campaignSlug }
                 }
 
+                console.log('detalhes')
                 store.dispatch('BREADCRUMB_ADD', route)
 
                 next()
@@ -75,11 +76,13 @@ const router = new Router({
                   beforeEnter: async (to, from, next) => {
                     const { id } = to.params
                     const route = {
+                      path: ':id',
                       label: id,
                       name: 'Editar campanha',
                       params: { id }
                     }
 
+                    console.log('tem?', store.getters.crumbs.length)
                     store.dispatch('BREADCRUMB_ADD', route)
 
                     next()

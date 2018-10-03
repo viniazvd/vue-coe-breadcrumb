@@ -26,14 +26,19 @@ export default {
 
   components: { CoeBreadcrumb },
 
+  hasCrumb: true,
+
   methods: {
     to (campaignSlug) {
       const route = {
+        // path: ':campaignSlug',
+        label: campaignSlug,
         name: 'Detalhes da campanha',
         params: { campaignSlug }
       }
 
       this.$router.push(route)
+      // this.$breadcrumb.add(route)
     }
   }
 }

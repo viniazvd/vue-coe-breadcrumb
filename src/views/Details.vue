@@ -5,7 +5,7 @@
     <p>{{ $route.params.campaignSlug }}</p>
 
     <div class="category">
-      <button @click="to('11111')">Editar</button>
+      <button @click="to('xyz')">Editar</button>
     </div>
 
     <router-view />
@@ -14,16 +14,21 @@
 
 <script>
 export default {
-  name: 'editar',
+  name: 'detail',
+
+  hasCrumb: true,
 
   methods: {
     to (id) {
       const route = {
+        // path: ':id',
+        label: id,
         name: 'Editar campanha',
         params: { id }
       }
 
       this.$router.push(route)
+      // this.$breadcrumb.add(route)
     }
   }
 }

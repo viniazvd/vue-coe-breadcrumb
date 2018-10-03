@@ -14,6 +14,10 @@ const crumbsFactory = context => {
 
     replace (crumb) {
       context.$store.dispatch('BREADCRUMB_REPLACE', crumb)
+    },
+
+    remap (crumbs) {
+      context.$store.dispatch('BREADCRUMB_REMAP', crumbs)
     }
   }
 }
