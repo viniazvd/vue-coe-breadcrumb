@@ -68,8 +68,6 @@
 export default {
   name: 'home',
 
-  hasCrumb: true,
-
   methods: {
     toCategory (category) {
       const route = {

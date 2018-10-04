@@ -16,19 +16,20 @@
 export default {
   name: 'detail',
 
-  hasCrumb: true,
+  breadcrumb: {
+    type: 'breadcrumb',
+    property: 'details',
+    name: 'Detalhes da campanha'
+  },
 
   methods: {
     to (id) {
       const route = {
-        // path: ':id',
-        label: id,
         name: 'Editar campanha',
         params: { id }
       }
 
       this.$router.push(route)
-      // this.$breadcrumb.add(route)
     }
   }
 }

@@ -10,6 +10,10 @@
 export default {
   name: 'edit',
 
-  hasCrumb: true
+  breadcrumb: {
+    type: 'breadcrumb',
+    property: 'edit',
+    name: 'Editar campanha'
+  }
 }
 </script>

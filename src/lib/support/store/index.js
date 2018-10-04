@@ -1,81 +1,63 @@
-import { hasDuplicates } from '../services'
-
 export default {
   state: {
     crumbs: [],
-    status: false
+    msg: '',
+    loading: false,
+    category: 'produtos-e-servicos',
+    details: '22222',
+    edit: 'xxx'
   },
 
   getters: {
-    crumbs: ({ crumbs }) => crumbs
+    crumbs: ({ crumbs }) => crumbs,
+
+    loading: ({ loading }) => loading,
+
+    msg: ({ msg }) => msg
   },
 
   mutations: {
+    UPDATE_CRUMB: (state, crumbs) => {
+      state.crumbs = crumbs
+    },
+
     ADD_CRUMB: (state, crumbs) => {
       state.crumbs = crumbs
     },
 
-    REMOVE_CRUMB: (state, sliced) => {
-      // ex:
-      // if slice === 1: remove last position
-      // if slice === 2: remove the last 2 positions
-      state.crumbs = sliced
+    SET_LOADER: (state, msg) => {
+      state.msg = msg
     },
 
-    REPLACE_CRUMB: (state, replaced) => {
-      state.crumbs = replaced
-    },
-
-    REMAP_CRUMBS: (state, crumbs) => {
-      state.crumbs = crumbs
-    },
-
-    STATUS_CRUMBS: (state, status) => {
-      state.status = status
+    HANDLE_LOADER: (state, status) => {
+      state.loading = status
     }
   },
 
   actions: {
-    BREADCRUMB_ADD: ({ commit, getters }, crumb) => {
-      // issue: does not detect the first crumb(home) at click
-      // so if the last crumb is the initial one, the store is updated
+    BREADCRUMB_UPDATE: ({ commit, getters }, { label, name }) => {
       const crumbs = getters['crumbs']
-      console.log('crumbs', crumbs.length)
+      const remaped = crumbs.map(crumb => (crumb.name === name && { ...crumb, label }) || crumb)
 
-      if (crumbs && crumbs.length > 1 && hasDuplicates([ ...crumbs, crumb ], 'name')) {
-        commit('ADD_CRUMB', [ crumb ])
-      } else {
-        commit('ADD_CRUMB', [ ...crumbs, crumb ])
+      commit('UPDATE_CRUMB', remaped)
+    },
+
+    BREADCRUMB_ADD: ({ commit, getters }, crumbs) => {
+      const getter = getters['crumbs']
+
+      if (!getter.length) {
+        commit('ADD_CRUMB', crumbs); return true
       }
+
+      const added = crumbs.map((crumb, index) => ({ ...crumb, label: getter[index] && getter[index].label }))
+
+      commit('ADD_CRUMB', added)
     },
 
-    BREADCRUMB_REMOVE: ({ commit, getters }, slice) => {
-      const crumbs = getters['crumbs']
-
-      const sliced = crumbs.slice(0, crumbs.length - slice)
-
-      commit('REMOVE_CRUMB', sliced)
+    BREADCRUMB_SET_LOADER: ({ commit }, msg) => {
+      commit('SET_LOADER', msg)
     },
 
-    BREADCRUMB_REPLACE: ({ commit, getters }, crumb) => {
-      const crumbs = getters['crumbs']
-
-      // remove last position
-      const sliced = crumbs.slice(0, -1)
-
-      const replaced = [ ...sliced, crumb ]
-
-      commit('REPLACE_CRUMB', replaced)
-    },
-
-    BREADCRUMB_REMAP: ({ commit }, routes) => {
-      const storage = JSON.parse(localStorage.getItem('crumbs'))
-
-      commit('REMAP_CRUMBS', storage)
-    },
-
-    BREADCRUMB_STATUS: ({ commit }, status) => {
-      commit('STATUS_CRUMBS', status)
-    }
+    BREADCRUMB_LOADER: ({ commit }, status) => commit('HANDLE_LOADER', status)
   }
 }

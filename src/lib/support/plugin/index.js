@@ -2,7 +2,7 @@ import crumbFactory from './crumbFactory'
 import registerStore from './registerStore'
 
 export default {
-  install (Vue, store) {
+  install (Vue, store, delay = 500, loader) {
     if (!store) {
       console.error('stack need store')
       return false
@@ -17,22 +17,20 @@ export default {
     })
 
     Vue.mixin({
-      created () {
-        if (this.$options.hasCrumb) {
-          if (localStorage.getItem('token')) {
-            console.log('seta item')
-            this.$breadcrumb.add(localStorage.getItem('crumbs'))
-            // localStorage.setItem('crumbs', JSON.stringify(this.$breadcrumb.crumbs))
-          } else {
-            console.log('remove item')
-            localStorage.removeItem('crumbs')
-          }
+      mounted () {
+        if (this.$options.breadcrumb) {
+          const { type, property, name } = this.$options.breadcrumb
+
+          this.$breadcrumb.setLoader(loader)
+
+          this.$breadcrumb.loader(true)
+
+          setTimeout(() => {
+            this.$breadcrumb.update(store.state[type][property], name)
+            this.$breadcrumb.loader(false)
+          }, delay)
         }
       }
-
-      // beforeDestroy () {
-      //   localStorage.setItem('crumbs', JSON.stringify(this.$breadcrumb.crumbs))
-      // }
     })
   }
 }

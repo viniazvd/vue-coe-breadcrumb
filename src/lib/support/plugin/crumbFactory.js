@@ -3,21 +3,25 @@ const crumbsFactory = context => {
     // getters
     crumbs: context.$store.getters.crumbs,
 
+    msg: context.$store.getters.msg,
+
+    loading: context.$store.getters.loading,
+
     // actions
+    update (label, name) {
+      context.$store.dispatch('BREADCRUMB_UPDATE', { label, name })
+    },
+
     add (name) {
       context.$store.dispatch('BREADCRUMB_ADD', name)
     },
 
-    remove (currentNivel) {
-      context.$store.dispatch('BREADCRUMB_REMOVE', currentNivel)
+    setLoader (msg) {
+      context.$store.dispatch('BREADCRUMB_SET_LOADER', msg)
     },
 
-    replace (crumb) {
-      context.$store.dispatch('BREADCRUMB_REPLACE', crumb)
-    },
-
-    remap (crumbs) {
-      context.$store.dispatch('BREADCRUMB_REMAP', crumbs)
+    loader (status) {
+      context.$store.dispatch('BREADCRUMB_LOADER', status)
     }
   }
 }

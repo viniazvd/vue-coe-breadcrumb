@@ -8,8 +8,8 @@
             :class="['link', { '-active': isActive(crumb) }]"
             :to="crumb"
           >
-            <slot name="crumbs" :label="getLabel(index)">
-              {{ getLabel(index) }}
+            <slot name="crumbs" :label="getLabel(crumb)">
+              {{ getLabel(crumb) }}
             </slot>
           </component>
         </li>
@@ -25,16 +25,7 @@ export default {
   watch: {
     '$route': {
       handler: 'syncCrumbs',
-      deep: true,
       immediate: true
-    }
-  },
-
-  computed: {
-    last () {
-      const length = this.$breadcrumb.crumbs.length - 1
-
-      return this.$breadcrumb.crumbs[length]
     }
   },
 
@@ -47,49 +38,12 @@ export default {
       return currentName === crumb.name
     },
 
-    getLabel (index) {
-      return (this.$breadcrumb.crumbs && this.$breadcrumb.crumbs[index] && this.$breadcrumb.crumbs[index].label) || '-'
-    },
-
-    getValue (obj) {
-      return Object.values(obj)[0]
-    },
-
-    replace () {
-      const key = Object.keys(this.$route.params)[0]
-
-      const currentParam = {
-        label: this.$route.params[key],
-        params: { [key]: this.$route.params[key] }
-      }
-
-      this.$breadcrumb.replace(currentParam)
+    getLabel (crumb) {
+      return this.$breadcrumb.loading ? 'loading...' : (crumb.label || crumb.name)
     },
 
     syncCrumbs (x, y) {
-      // sync
-      // .. to-do (remover lógica dos guards das rotas)
-
-      // if page reload, remap the labels of store
-      // if (this.$breadcrumb.crumbs.some(({ label }) => !label)) this.$breadcrumb.remap()
-
-      // replace
-      // if ((x && x.name) === (y && y.name) && (x && x.path) !== (y && y.path)) this.replace()
-
-      // remove
-      // if (this.$breadcrumb.crumbs.length > this.$route.matched.length) {
-      //   this.$breadcrumb.remove(this.$breadcrumb.crumbs.length - this.$route.matched.length)
-      // }
-
-      // takes the value of the last parameter of the store
-      // const lastCrumb = this.$breadcrumb.crumbs[this.$breadcrumb.crumbs.length - 1]
-      // let property = 'query'
-      // if (!lastCrumb[property]) property = 'params'
-
-      // const { [property]: paramRoute } = x
-
-      // replace after remove
-      // if (this.getValue(lastCrumb[property]) !== this.getValue(paramRoute)) this.replace()
+      this.$breadcrumb.add(x.matched)
     }
   }
 }
