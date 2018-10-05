@@ -57,7 +57,6 @@ export default {
 
   methods: {
     toCategories (category, campaignSlug) {
-      // console.log('toCategories')
       const route = {
         name: 'Detalhes da campanha',
         params: { campaignSlug },

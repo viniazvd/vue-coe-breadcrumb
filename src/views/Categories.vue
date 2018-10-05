@@ -41,7 +41,6 @@ export default {
 
   methods: {
     to (campaignSlug) {
-      console.log('toDetails2', campaignSlug)
       const route = {
         name: 'Detalhes da campanha',
         params: { campaignSlug }

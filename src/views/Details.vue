@@ -33,7 +33,6 @@ export default {
 
   methods: {
     to (type) {
-      // console.log('toEdit')
       const route = {
         name: 'Editar campanha',
         params: { id: type }
