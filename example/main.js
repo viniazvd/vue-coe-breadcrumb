@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import VueCoeBreadcrumb from './lib/support/plugin'
+import VueCoeBreadcrumb from 'vue-coe-breadcrumb'
 
 Vue.use(VueCoeBreadcrumb, store, {
   delay: 250,
