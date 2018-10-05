@@ -81,5 +81,5 @@ loaderMsg     | `loading...` | `false`  | loader message
 
 ## slots: component
 
-1. crumbs
-2. name
+- crumbs
+- name
