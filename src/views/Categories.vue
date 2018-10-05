@@ -31,8 +31,7 @@ export default {
   },
 
   breadcrumb: {
-    type: 'categories',
-    property: 'category',
+    getters: 'category',
     name: 'Campanhas'
   },
 

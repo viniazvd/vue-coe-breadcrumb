@@ -2,10 +2,7 @@ export default {
   state: {
     crumbs: [],
     msg: '',
-    loading: false,
-    category: 'produtos-e-servicos',
-    details: '22222',
-    edit: 'xxx'
+    loading: false
   },
 
   getters: {

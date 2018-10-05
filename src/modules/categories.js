@@ -4,7 +4,13 @@ const state = {
   edit: ''
 }
 
-const getters = {}
+const getters = {
+  category: ({ category }) => category,
+
+  details: ({ details }) => details,
+
+  edit: ({ edit }) => edit
+}
 
 const mutations = {
   ADD_CATEGORY: (state, category) => {

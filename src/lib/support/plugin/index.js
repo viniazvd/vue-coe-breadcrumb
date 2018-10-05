@@ -19,14 +19,14 @@ export default {
     Vue.mixin({
       mounted () {
         if (this.$options.breadcrumb) {
-          const { type, property, name } = this.$options.breadcrumb
+          const { getters: λ, name } = this.$options.breadcrumb
 
           this.$breadcrumb.setLoader(loader)
 
           this.$breadcrumb.loader(true)
 
           setTimeout(() => {
-            this.$breadcrumb.update(store.state[type][property], name)
+            this.$breadcrumb.update(store.getters[λ], name)
             this.$breadcrumb.loader(false)
           }, delay)
         }

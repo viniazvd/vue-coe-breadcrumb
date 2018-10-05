@@ -15,8 +15,7 @@ export default {
   },
 
   breadcrumb: {
-    type: 'categories',
-    property: 'edit',
+    getters: 'edit',
     name: 'Editar campanha'
   }
 }

@@ -21,8 +21,7 @@ export default {
   },
 
   breadcrumb: {
-    type: 'categories',
-    property: 'details',
+    getters: 'details',
     name: 'Detalhes da campanha'
   },
 
