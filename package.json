@@ -1,6 +1,6 @@
 {
   "name": "vue-coe-breadcrumb",
-  "version": "0.1.6",
+  "version": "0.0.0",
   "description": "first breadcrumb with dynamic labels (centralized in store)",
   "readmeFilename": "README.md",
   "keywords": [
@@ -11,7 +11,9 @@
     "dynamic"
   ],
   "main": "dist/vue-coe-breadcrumb.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "author": {
     "name": "Vinicius Azevedo",
     "email": "viniazvd@gmail.com"
@@ -22,9 +24,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "bili ./src/index.js --formats cjs,es,umd"
+    "build": "bili src/index.js --formats cjs,es,umd"
   },
   "devDependencies": {
+    "@vue/babel-preset-app": "^3.0.4",
     "bili": "^3.1.2",
     "rollup-plugin-vue": "^4.3.2",
     "vue-template-compiler": "^2.5.17"

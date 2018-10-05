@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import CoeBreadcrumb from '../lib/components/CoeBreadcrumb'
+import VueCoeBreadcrumb from 'vue-coe-breadcrumb'
 
 export default {
   name: 'categories',
 
-  components: { CoeBreadcrumb },
+  components: { VueCoeBreadcrumb },
 
   mounted () {
     setTimeout(() => {

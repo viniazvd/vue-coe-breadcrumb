@@ -57,6 +57,10 @@ export default {
     syncRoute ({ matched, params, query }) {
       this.$breadcrumb.syncRoute({ matched, query, params })
     }
+  },
+
+  install (Vue) {
+    Vue.component('VueCoeBreadcrumb', this)
   }
 }
 </script>
