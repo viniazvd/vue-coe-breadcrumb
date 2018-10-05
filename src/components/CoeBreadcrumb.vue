@@ -59,8 +59,8 @@ export default {
     }
   },
 
-  install (Vue) {
-    Vue.component('VueCoeBreadcrumb', this)
+  install (Vue, { name = 'coe-breadcrumb' } = {}) {
+    Vue.component(name, this)
   }
 }
 </script>
