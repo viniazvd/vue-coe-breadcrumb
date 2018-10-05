@@ -7,13 +7,13 @@ export default {
   },
 
   getters: {
-    crumbs: ({ crumbs }) => crumbs,
+    __crumbs: ({ crumbs }) => crumbs,
 
-    loaderMsg: ({ loaderMsg }) => loaderMsg,
+    __loaderMsg: ({ loaderMsg }) => loaderMsg,
 
-    separator: ({ separator }) => separator,
+    __separator: ({ separator }) => separator,
 
-    loading: ({ loading }) => loading
+    __loading: ({ loading }) => loading
   },
 
   mutations: {
