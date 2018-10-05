@@ -27,7 +27,9 @@ export default {
   components: { CoeBreadcrumb },
 
   mounted () {
-    this.$store.dispatch('CATEGORY_ADD', this.$route.query.category)
+    setTimeout(() => {
+      this.$store.dispatch('CATEGORY_ADD', this.$route.query.category)
+    }, 1500)
   },
 
   breadcrumb: {

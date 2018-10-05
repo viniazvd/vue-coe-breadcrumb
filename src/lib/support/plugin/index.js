@@ -29,6 +29,8 @@ export default {
             this.$breadcrumb.update(store.getters[λ], name)
             this.$breadcrumb.loader(false)
           }, delay)
+
+          store.watch(() => store.getters[λ], crumb => this.$breadcrumb.update(crumb, name))
         }
       }
     })

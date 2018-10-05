@@ -11,7 +11,9 @@ export default {
   name: 'edit',
 
   mounted () {
-    this.$store.dispatch('EDIT_ADD', this.$route.params.id)
+    setTimeout(() => {
+      this.$store.dispatch('EDIT_ADD', this.$route.params.id)
+    }, 1500)
   },
 
   breadcrumb: {

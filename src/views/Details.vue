@@ -17,7 +17,9 @@ export default {
   name: 'detail',
 
   mounted () {
-    this.$store.dispatch('DETAILS_ADD', this.$route.params.campaignSlug)
+    setTimeout(() => {
+      this.$store.dispatch('DETAILS_ADD', this.$route.params.campaignSlug)
+    }, 1500)
   },
 
   breadcrumb: {
