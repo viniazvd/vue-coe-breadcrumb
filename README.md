@@ -71,9 +71,11 @@ export default {
 
 ## options: plugin instance
 
+
 Name          | Default      | Required | About
 :-------------|:------------:|:--------:|:-------------------------
 store         |              | `true`   | instance of store
 delay         | `500`        | `false`  | delay for labels to load
 separatorText | `\|`         | `false`  | separator text
 loaderMsg     | `loading...` | `false`  | loader message
+
