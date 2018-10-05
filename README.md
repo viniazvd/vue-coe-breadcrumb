@@ -7,7 +7,7 @@
 <br>
 
 <p align="center">
-  ✨ <a href="#">Example</a>✨
+  ✨ <a href="https://codesandbox.io/s/github/viniazvd/vue-coe-breadcrumb-example">Example</a>✨
 </p>
 
 <br>
