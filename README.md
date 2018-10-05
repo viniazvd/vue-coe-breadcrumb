@@ -79,3 +79,7 @@ delay         | `500`        | `false`  | delay for labels to load
 separatorText | `\|`         | `false`  | separator text
 loaderMsg     | `loading...` | `false`  | loader message
 
+## slots: component
+
+1. crumbs
+2. name
