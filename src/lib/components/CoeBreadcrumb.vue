@@ -3,11 +3,7 @@
     <slot name="crumbs" :crumbs="$breadcrumb.crumbs">
       <ul class="breadcrumbs">
         <li v-for="(crumb, index) in $breadcrumb.crumbs" :key="index" :style="separator" class="crumb">
-          <component
-            :is="getType(crumb)"
-            :class="getClasses(crumb)"
-            :to="redirect(crumb)"
-          >
+          <component :is="getType(crumb)" :class="getClasses(crumb)" :to="redirect(crumb)">
             <slot name="crumbs" :label="getLabel(crumb)">{{ getLabel(crumb) }}</slot>
           </component>
         </li>
