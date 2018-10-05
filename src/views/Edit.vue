@@ -10,8 +10,12 @@
 export default {
   name: 'edit',
 
+  mounted () {
+    this.$store.dispatch('EDIT_ADD', this.$route.params.id)
+  },
+
   breadcrumb: {
-    type: 'breadcrumb',
+    type: 'categories',
     property: 'edit',
     name: 'Editar campanha'
   }

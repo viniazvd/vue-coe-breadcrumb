@@ -16,8 +16,12 @@
 export default {
   name: 'detail',
 
+  mounted () {
+    this.$store.dispatch('DETAILS_ADD', this.$route.params.campaignSlug)
+  },
+
   breadcrumb: {
-    type: 'breadcrumb',
+    type: 'categories',
     property: 'details',
     name: 'Detalhes da campanha'
   },
