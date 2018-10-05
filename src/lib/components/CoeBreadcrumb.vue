@@ -2,15 +2,13 @@
   <div class="coe-breadcrumb">
     <slot name="crumbs" :crumbs="$breadcrumb.crumbs">
       <ul class="breadcrumbs">
-        <li v-for="(crumb, index) in $breadcrumb.crumbs" :key="index" class="crumb">
+        <li v-for="(crumb, index) in $breadcrumb.crumbs" :key="index" :style="separator" class="crumb">
           <component
-            :is="(isActive(crumb) && 'div') || 'router-link'"
-            :class="['link', { '-active': isActive(crumb) }]"
-            :to="crumb"
+            :is="getType(crumb)"
+            :class="getClasses(crumb)"
+            :to="redirect(crumb)"
           >
-            <slot name="crumbs" :label="getLabel(crumb)">
-              {{ getLabel(crumb) }}
-            </slot>
+            <slot name="crumbs" :label="getLabel(crumb)">{{ getLabel(crumb) }}</slot>
           </component>
         </li>
       </ul>
@@ -24,8 +22,14 @@ export default {
 
   watch: {
     '$route': {
-      handler: 'syncCrumbs',
+      handler: 'syncRoute',
       immediate: true
+    }
+  },
+
+  computed: {
+    separator () {
+      return { '--separator': `'${this.$breadcrumb.separator}'` }
     }
   },
 
@@ -38,12 +42,24 @@ export default {
       return currentName === crumb.name
     },
 
-    getLabel (crumb) {
-      return this.$breadcrumb.loading ? 'loading...' : (crumb.label || crumb.name)
+    getType (crumb) {
+      return (this.isActive(crumb) && 'div') || 'router-link'
     },
 
-    syncCrumbs (x, y) {
-      this.$breadcrumb.add(x.matched)
+    getClasses (crumb) {
+      return ['link', { '-active': this.isActive(crumb) }]
+    },
+
+    getLabel (crumb) {
+      return this.$breadcrumb.loading ? this.$breadcrumb.loaderMsg : (crumb.label || crumb.name || 'Início')
+    },
+
+    redirect (crumb) {
+      return (!crumb.path && '/') || crumb
+    },
+
+    syncRoute ({ matched, params, query }) {
+      this.$breadcrumb.syncRoute({ matched, query, params })
     }
   }
 }
@@ -64,7 +80,7 @@ export default {
 }
 
 .crumb:not(:last-child):after {
-  content: '|';
+  content: var(--separator);
   padding-left: 10px;
 }
 

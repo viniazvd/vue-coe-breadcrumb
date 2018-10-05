@@ -1,29 +1,36 @@
 export default {
   state: {
     crumbs: [],
-    msg: '',
+    loaderMsg: '',
+    separator: '',
     loading: false
   },
 
   getters: {
     crumbs: ({ crumbs }) => crumbs,
 
-    loading: ({ loading }) => loading,
+    loaderMsg: ({ loaderMsg }) => loaderMsg,
 
-    msg: ({ msg }) => msg
+    separator: ({ separator }) => separator,
+
+    loading: ({ loading }) => loading
   },
 
   mutations: {
-    UPDATE_CRUMB: (state, crumbs) => {
+    SYNC_STORE: (state, crumbs) => {
       state.crumbs = crumbs
     },
 
-    ADD_CRUMB: (state, crumbs) => {
+    SYNC_ROUTE: (state, crumbs) => {
       state.crumbs = crumbs
     },
 
-    SET_LOADER: (state, msg) => {
-      state.msg = msg
+    SET_SEPARATOR: (state, separator) => {
+      state.separator = separator
+    },
+
+    SET_LOADER: (state, loaderMsg) => {
+      state.loaderMsg = loaderMsg
     },
 
     HANDLE_LOADER: (state, status) => {
@@ -32,29 +39,42 @@ export default {
   },
 
   actions: {
-    BREADCRUMB_UPDATE: ({ commit, getters }, { label, name }) => {
+    BREADCRUMB_SYNC_STORE: ({ commit, getters }, { label, name }) => {
       const crumbs = getters['crumbs']
+      // console.log('crumbs', crumbs)
       const remaped = crumbs.map(crumb => (crumb.name === name && { ...crumb, label }) || crumb)
 
-      commit('UPDATE_CRUMB', remaped)
+      // const remaped = crumbs.map(crumb => {
+      //   return {
+      //     ...(crumb.name === name && { ...crumb, label }) || crumb,
+      //     name: crumb.name || 'Início'
+      //   }
+      // })
+
+      commit('SYNC_STORE', remaped)
     },
 
-    BREADCRUMB_ADD: ({ commit, getters }, crumbs) => {
+    BREADCRUMB_SYNC_ROUTE: ({ commit, getters }, { matched, query = {}, params = {} }) => {
       const getter = getters['crumbs']
 
-      if (!getter.length) {
-        commit('ADD_CRUMB', crumbs); return true
-      }
+      const lastQuery = Object.values(query)[0]
+      const lastParam = Object.values(params)[0]
 
-      const added = crumbs.map((crumb, index) => ({ ...crumb, label: getter[index] && getter[index].label }))
+      const added = matched.map((crumb, index) => ({
+        ...crumb,
+        label: (matched.length - 1 === index && (lastQuery || lastParam)) || (getter[index] && getter[index].label)
+      }))
 
-      commit('ADD_CRUMB', added)
+      commit('SYNC_ROUTE', added)
     },
 
-    BREADCRUMB_SET_LOADER: ({ commit }, msg) => {
-      commit('SET_LOADER', msg)
+    BREADCRUMB_SET_SEPARATOR: ({ commit }, separator) => commit('SET_SEPARATOR', separator),
+
+    BREADCRUMB_SET_LOADER: ({ commit }, loaderMsg) => {
+      commit('SET_LOADER', loaderMsg)
     },
 
     BREADCRUMB_LOADER: ({ commit }, status) => commit('HANDLE_LOADER', status)
+
   }
 }

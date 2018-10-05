@@ -2,7 +2,7 @@
   <div>
     <h2>Editar</h2>
 
-    <p>{{ $route.params.id }}</p>
+    <p>Input para editar o: {{ $route.params.id }}</p>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.$store.dispatch('EDIT_ADD', this.$route.params.id)
-    }, 1500)
+    }, 500)
   },
 
   breadcrumb: {

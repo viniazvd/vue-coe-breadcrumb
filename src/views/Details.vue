@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h3>Details</h3>
-
-    <p>{{ $route.params.campaignSlug }}</p>
-
     <div class="category">
-      <button @click="to('xyz')">Editar</button>
+      Detalhes da campanha: {{ this.$route.params.campaignSlug }}
+
+      <br /><br />
+
+      <button @click="to('nome')">Editar Nome</button>
+      <br />
+      <button @click="to('endereco')">Editar Endereço</button>
+      <br />
+      <button @click="to('email')">Editar E-mail</button>
     </div>
 
     <router-view />
@@ -19,7 +23,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.$store.dispatch('DETAILS_ADD', this.$route.params.campaignSlug)
-    }, 1500)
+    }, 500)
   },
 
   breadcrumb: {
@@ -28,10 +32,11 @@ export default {
   },
 
   methods: {
-    to (id) {
+    to (type) {
+      // console.log('toEdit')
       const route = {
         name: 'Editar campanha',
-        params: { id }
+        params: { id: type }
       }
 
       this.$router.push(route)

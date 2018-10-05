@@ -5,7 +5,11 @@ import store from './store'
 
 import VueCoeBreadcrumb from './lib/support/plugin'
 
-Vue.use(VueCoeBreadcrumb, store, 1000, 'loading...')
+Vue.use(VueCoeBreadcrumb, store, {
+  delay: 250,
+  separatorText: '>',
+  loaderMsg: 'loading...'
+})
 
 Vue.config.productionTip = false
 
