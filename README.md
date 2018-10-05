@@ -12,15 +12,6 @@
 
 <br>
 
-**Disclaimer**
-
-In the past, it was very difficult and expensive to detect the visibility of a particular element.
-
-The Intersection Observer API solves this problem in a really organized, efficient and performative way. 
-It provides a workable template that we can observe to be notified when an element enters the viewport.
-
-<br>
-
 **Competitive Diferentials**
 <ul style='margin: 0; padding: 0; color: red; list-style-type: none;'>
   <li>intuitive and easy to set up</li>  
