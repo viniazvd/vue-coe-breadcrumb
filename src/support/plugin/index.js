@@ -16,11 +16,7 @@ export default {
       }
     })
 
-    let { delay, separatorText, loaderMsg } = options
-
-    if (!delay) delay = 500
-    if (!loaderMsg) loaderMsg = 'loading...'
-    if (!separatorText) separatorText = '|'
+    const { delay = 500, separatorText = '|', loaderMsg = 'loading...' } = options
 
     Vue.mixin({
       mounted () {
