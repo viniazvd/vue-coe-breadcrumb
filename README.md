@@ -22,12 +22,6 @@
 
 <br>
 
-**Warning**
-<br>
-Store is required!
-
-<br>
-
 **Install**
 
 `yarn add vue-coe-breadcrumb`
