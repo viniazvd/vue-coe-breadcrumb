@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'Breadcrumb',
+  name: 'coe-breadcrumb',
 
   watch: {
     '$route': {
@@ -60,7 +60,7 @@ export default {
   },
 
   install (Vue) {
-    Vue.component('Breadcrumb', this)
+    Vue.component('CoeBreadcrumb', this)
   }
 }
 </script>
