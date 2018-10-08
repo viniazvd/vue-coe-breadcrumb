@@ -40,7 +40,7 @@ export default {
 
   actions: {
     BREADCRUMB_SYNC_STORE: ({ commit, getters }, { label, name }) => {
-      const crumbs = getters['crumbs']
+      const crumbs = getters['crumbs'] || getters['__crumbs']
 
       const remaped = crumbs.map(crumb => (crumb.name === name && { ...crumb, label }) || crumb)
 
@@ -48,7 +48,7 @@ export default {
     },
 
     BREADCRUMB_SYNC_ROUTE: ({ commit, getters }, { matched, query = {}, params = {} }) => {
-      const crumbs = getters['crumbs']
+      const crumbs = getters['crumbs'] || getters['__crumbs']
 
       const lastQuery = Object.values(query)[0]
       const lastParam = Object.values(params)[0]
