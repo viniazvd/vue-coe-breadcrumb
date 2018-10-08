@@ -41,28 +41,23 @@ export default {
   actions: {
     BREADCRUMB_SYNC_STORE: ({ commit, getters }, { label, name }) => {
       const crumbs = getters['crumbs']
-      // console.log('crumbs', crumbs)
-      const remaped = crumbs.map(crumb => (crumb.name === name && { ...crumb, label }) || crumb)
+      if (!crumbs.length) return false
 
-      // const remaped = crumbs.map(crumb => {
-      //   return {
-      //     ...(crumb.name === name && { ...crumb, label }) || crumb,
-      //     name: crumb.name || 'Início'
-      //   }
-      // })
+      const remaped = crumbs.map(crumb => (crumb.name === name && { ...crumb, label }) || crumb)
 
       commit('SYNC_STORE', remaped)
     },
 
     BREADCRUMB_SYNC_ROUTE: ({ commit, getters }, { matched, query = {}, params = {} }) => {
-      const getter = getters['crumbs']
+      const crumbs = getters['crumbs']
+      if (!crumbs.length) return false
 
       const lastQuery = Object.values(query)[0]
       const lastParam = Object.values(params)[0]
 
       const added = matched.map((crumb, index) => ({
         ...crumb,
-        label: (matched.length - 1 === index && (lastQuery || lastParam)) || (getter[index] && getter[index].label)
+        label: (matched.length - 1 === index && (lastQuery || lastParam)) || (crumbs[index] && crumbs[index].label)
       }))
 
       commit('SYNC_ROUTE', added)
