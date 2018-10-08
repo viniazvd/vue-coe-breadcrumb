@@ -1,6 +1,6 @@
 {
   "name": "vue-coe-breadcrumb",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "first breadcrumb with dynamic labels (centralized in store)",
   "readmeFilename": "README.md",
   "keywords": [
