@@ -2,7 +2,7 @@ import crumbFactory from './crumbFactory'
 import registerStore from './registerStore'
 
 export default {
-  install (Vue, store, options) {
+  install (Vue, store, options = {}) {
     if (!store) {
       console.error('stack need store')
       return false
@@ -16,13 +16,19 @@ export default {
       }
     })
 
-    const { delay = 500, separatorText = '|', loaderMsg = 'loading...' } = options
+    let { delay, separatorText, loaderMsg, hidden } = options
+
+    if (!delay || delay < 501) delay = 501
+    if (!separatorText) separatorText = '|'
+    if (!loaderMsg) loaderMsg = 'loading...'
+    if (!hidden) hidden = []
 
     Vue.mixin({
       mounted () {
         if (this.$options.breadcrumb) {
           const { getters: λ, name } = this.$options.breadcrumb
 
+          this.$breadcrumb.setHidden(hidden)
           this.$breadcrumb.setSeparator(separatorText)
           this.$breadcrumb.setLoader(loaderMsg)
           this.$breadcrumb.loader(true)
@@ -33,12 +39,6 @@ export default {
           }, delay)
 
           store.watch(() => store.getters[λ], crumb => this.$breadcrumb.syncStore(crumb, name))
-
-          // store.subscribeAction((action) => {
-          //   if (action.type === 'BREADCRUMB_SYNC_ROUTE') {
-          //     console.log((action.payload.params.length && action.payload.params) || action.payload)
-          //   }
-          // })
         }
       }
     })
