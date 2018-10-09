@@ -9,9 +9,11 @@ const crumbsFactory = context => {
 
     loading: context.$store.getters.__loading,
 
+    hidden: context.$store.getters.__hidden,
+
     // actions
-    syncStore (label, name) {
-      context.$store.dispatch('BREADCRUMB_SYNC_STORE', { label, name })
+    syncStore (label, name, hidden) {
+      context.$store.dispatch('BREADCRUMB_SYNC_STORE', { label, name, hidden })
     },
 
     syncRoute (name) {
@@ -24,6 +26,10 @@ const crumbsFactory = context => {
 
     setLoader (loaderMsg) {
       context.$store.dispatch('BREADCRUMB_SET_LOADER', loaderMsg)
+    },
+
+    setHidden (hidden) {
+      context.$store.dispatch('BREADCRUMB_SET_HIDDEN', hidden)
     },
 
     loader (status) {
