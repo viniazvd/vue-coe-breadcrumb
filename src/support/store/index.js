@@ -40,7 +40,13 @@ export default {
 
       const remaped = crumbs
         .filter(crumb => !hidden.includes(crumb.name))
-        .map(crumb => (crumb.name === name && { ...crumb, label }) || crumb)
+        .map(crumb => (crumb.name === name && {
+          name: crumb.name,
+          meta: crumb.meta,
+          params: crumb.params,
+          redirect: crumb.redirect,
+          label
+        }) || crumb)
 
       commit('SYNC_STORE', remaped)
     },
@@ -55,7 +61,10 @@ export default {
       const added = matched
         .filter(crumb => !hidden.includes(crumb.name))
         .map((crumb, index) => ({
-          ...crumb,
+          name: crumb.name,
+          meta: crumb.meta,
+          params: crumb.params,
+          redirect: crumb.redirect,
           label: (matched.length - 1 === index && (lastQuery || lastParam)) || (crumbs[index] && crumbs[index].label)
         }))
 
