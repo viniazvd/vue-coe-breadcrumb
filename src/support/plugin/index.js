@@ -8,7 +8,19 @@ export default {
       return false
     }
 
-    registerStore(store)
+    let { storeName, delay, separatorText, loaderMsg, hidden } = options
+
+    if (!storeName) storeName = 'coebreadcrumb'
+    if (!delay || delay < 501) delay = 501
+    if (!separatorText) separatorText = '|'
+    if (!loaderMsg) loaderMsg = 'loading...'
+    if (!hidden) hidden = []
+
+    store.dispatch('BREADCRUMB_SET_SEPARATOR', separatorText)
+    store.dispatch('BREADCRUMB_SET_LOADER', loaderMsg)
+    store.dispatch('BREADCRUMB_SET_HIDDEN', hidden)
+
+    registerStore(store, storeName)
 
     Object.defineProperty(Vue.prototype, '$breadcrumb', {
       get () {
@@ -16,21 +28,11 @@ export default {
       }
     })
 
-    let { delay, separatorText, loaderMsg, hidden } = options
-
-    if (!delay || delay < 501) delay = 501
-    if (!separatorText) separatorText = '|'
-    if (!loaderMsg) loaderMsg = 'loading...'
-    if (!hidden) hidden = []
-
     Vue.mixin({
       mounted () {
         if (this.$options.breadcrumb) {
           const { getters: λ, name } = this.$options.breadcrumb
 
-          this.$breadcrumb.setHidden(hidden)
-          this.$breadcrumb.setSeparator(separatorText)
-          this.$breadcrumb.setLoader(loaderMsg)
           this.$breadcrumb.loader(true)
 
           setTimeout(() => {
