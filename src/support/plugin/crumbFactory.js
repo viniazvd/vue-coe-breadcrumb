@@ -20,18 +20,6 @@ const crumbsFactory = context => {
       context.$store.dispatch('BREADCRUMB_SYNC_ROUTE', name)
     },
 
-    setSeparator (separator) {
-      context.$store.dispatch('BREADCRUMB_SET_SEPARATOR', separator)
-    },
-
-    setLoader (loaderMsg) {
-      context.$store.dispatch('BREADCRUMB_SET_LOADER', loaderMsg)
-    },
-
-    setHidden (hidden) {
-      context.$store.dispatch('BREADCRUMB_SET_HIDDEN', hidden)
-    },
-
     loader (status) {
       context.$store.dispatch('BREADCRUMB_LOADER', status)
     }
