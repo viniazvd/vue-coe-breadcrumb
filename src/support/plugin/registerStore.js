@@ -1,7 +1,7 @@
 import crumbStore from '../store'
 
-const registerStore = store => {
-  store.registerModule('coebreadcrumb', { ...crumbStore })
+const registerStore = (store, storeName) => {
+  store.registerModule(storeName, { ...crumbStore })
 }
 
 export default registerStore
