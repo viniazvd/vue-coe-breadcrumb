@@ -16,11 +16,11 @@ export default {
     if (!loaderMsg) loaderMsg = 'loading...'
     if (!hidden) hidden = []
 
+    registerStore(store, storeName)
+
     store.dispatch('BREADCRUMB_SET_SEPARATOR', separatorText)
     store.dispatch('BREADCRUMB_SET_LOADER', loaderMsg)
     store.dispatch('BREADCRUMB_SET_HIDDEN', hidden)
-
-    registerStore(store, storeName)
 
     Object.defineProperty(Vue.prototype, '$breadcrumb', {
       get () {
