@@ -4,7 +4,7 @@
       <ul class="breadcrumbs">
         <li v-for="(crumb, index) in $breadcrumb.crumbs" :key="index" :style="separator" class="crumb">
           <component :is="getType(crumb)" :class="getClasses(crumb)" :to="redirect(crumb)">
-            <slot name="label" :label="getLabel(crumb)">{{ getLabel(crumb) }}</slot>
+            <slot name="crumbs" :label="getLabel(crumb)">{{ getLabel(crumb) }}</slot>
           </component>
         </li>
       </ul>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'coeBreadcrumb',
+  name: 'coe-breadcrumb',
 
   watch: {
     '$route': {
@@ -47,20 +47,16 @@ export default {
     },
 
     getLabel (crumb) {
-      return this.$breadcrumb.loading ? this.$breadcrumb.loaderMsg : (crumb.label || crumb.name || 'Início')
+      return (crumb.label || crumb.name || 'Início')
     },
 
     redirect (crumb) {
       return (!crumb.path && '/') || crumb
     },
 
-    syncRoute ({ matched, params, query }) {
-      this.$breadcrumb.syncRoute({ matched, query, params })
+    syncRoute ({ fullPath, name, matched, query, params }) {
+      this.$breadcrumb.syncRoute({ fullPath, name, matched, query, params })
     }
-  },
-
-  install (Vue) {
-    Vue.component('CoeBreadcrumb', this)
   }
 }
 </script>
