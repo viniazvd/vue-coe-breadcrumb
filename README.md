@@ -76,9 +76,7 @@ Name          | Default        | Required | About
 :-------------|:--------------:|:--------:|:-------------------------
 storeName     | `coebreadcrumb`| `false`  | store name
 store         |                | `true`   | instance of store
-delay         | `500`          | `false`  | delay for labels to load
 separatorText | `\|`           | `false`  | separator text
-loaderMsg     | `loading...`   | `false`  | loader message
 hidden        | `[]`           | `false`  | array of strings with the name of the routes that will be hidden
 
 ## slots: component
