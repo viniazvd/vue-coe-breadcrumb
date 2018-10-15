@@ -58,8 +58,7 @@ export default {
   // ...
   
   breadcrumb: {
-    getters: 'anyGettersFromYourStore', // the label of this route / crumb will be populated by the called getters value
-    name: 'nameOfTheCurrentRoute'
+    getters: 'anyGettersFromYourStore' // the label of this route / crumb will be populated by the called getters value
   }
   
   // ...
