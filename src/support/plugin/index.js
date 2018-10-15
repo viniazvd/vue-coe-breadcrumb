@@ -28,9 +28,9 @@ export default {
     Vue.mixin({
       mounted () {
         if (this.$options.breadcrumb) {
-          const { getters: λ, name } = this.$options.breadcrumb
+          const { getters: λ } = this.$options.breadcrumb
 
-          store.watch(() => store.getters[λ], label => this.$breadcrumb.syncStore(label, name))
+          store.watch(() => store.getters[λ], label => this.$breadcrumb.syncStore(label))
         }
       }
     })

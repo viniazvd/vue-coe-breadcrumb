@@ -27,9 +27,11 @@ export default {
   },
 
   actions: {
-    BREADCRUMB_SYNC_STORE: ({ commit, getters }, { label, name }) => {
+    BREADCRUMB_SYNC_STORE: ({ commit, getters }, { label }) => {
       const crumbs = getters['__crumbs']
       const hidden = getters['__hidden']
+
+      const name = crumbs[crumbs.length - 1].name
 
       const remaped = crumbs
         .map(crumb => {

@@ -8,8 +8,8 @@ const crumbsFactory = context => {
     hidden: context.$store.getters.__hidden,
 
     // actions
-    syncStore (label, name) {
-      context.$store.dispatch('BREADCRUMB_SYNC_STORE', { label, name })
+    syncStore (label) {
+      context.$store.dispatch('BREADCRUMB_SYNC_STORE', { label })
     },
 
     syncRoute (routes) {
